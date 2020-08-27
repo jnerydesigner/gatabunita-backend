@@ -5,6 +5,14 @@ import crypto from 'crypto';
 const tmpFolder = path.resolve(__dirname, '..', '..','tmp');
 
 
+function nameFile(fileName:string){
+    const fileHash = crypto.randomBytes(10).toString('hex');
+    const nameSemEspaços = fileName.toLowerCase().split(" ").join("-");
+
+    return  fileName = `${fileHash}-${nameSemEspaços}`;
+    
+}
+
 
 export default {
     directory: tmpFolder,
@@ -12,8 +20,12 @@ export default {
     storage: multer.diskStorage({
         destination: tmpFolder,
         filename: (request, file, callback) => {
-            const fileHash = crypto.randomBytes(10).toString('hex');
-            const fileName = `${fileHash}-${file.originalname}`;
+            //Código antigo
+            //const fileHash = crypto.randomBytes(10).toString('hex');
+            //const fileName = `${fileHash}-${file.originalname}`;
+
+            //Código Novo
+            const fileName = nameFile(file.originalname);            
 
             return callback(null, fileName);
         },
