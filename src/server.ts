@@ -1,5 +1,6 @@
 import 'reflect-metadata';
 import express, { Request, Response, NextFunction} from 'express';
+import cors from 'cors';
 import 'express-async-errors';
 import routes from './routes';
 import './database';
@@ -8,6 +9,7 @@ import AppError from './errors/AppError';
 
 
 const app = express();
+app.use(cors());
 app.use(express.json());
 
 app.use('/files', express.static(uploadConfig.directory));
@@ -32,5 +34,5 @@ app.use((err: Error, request: Request, response: Response, next: NextFunction) =
 
 
 app.listen(3333, ()=>{
-    console.log('Server Start');
+    console.log('Server Start⚡');
 })
