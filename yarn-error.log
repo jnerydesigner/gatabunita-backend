@@ -1,5 +1,5 @@
 Arguments: 
-  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js add -D ensureAuthenticated
+  C:\Program Files\nodejs\node.exe C:\Program Files (x86)\Yarn\bin\yarn.js
 
 PATH: 
   C:\cmder\bin;C:\cmder\vendor\bin;C:\cmder\vendor\conemu-maximus5\ConEmu\Scripts;C:\cmder\vendor\conemu-maximus5;C:\cmder\vendor\conemu-maximus5\ConEmu;C:\Python27\;C:\Python27\Scripts;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64_win\compiler;C:\Program Files (x86)\Common Files\Intel\Shared Libraries\redist\intel64\compiler;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Program Files\Git\cmd;C:\Program Files\Git\mingw64\bin;C:\Program Files\Git\usr\bin;C:\WINDOWS\system32;C:\WINDOWS;C:\WINDOWS\System32\Wbem;C:\WINDOWS\System32\WindowsPowerShell\v1.0\;C:\WINDOWS\System32\OpenSSH\;C:\wamp64\bin\php\php7.2.18;C:\ProgramData\chocolatey\bin;C:\Program Files\Java\jdk1.8.0_211\bin;D:\Android\SDK\platform-tools;D:\Android\SDK\tools;C:\xampp\php;C:\ProgramData\ComposerSetup\bin;C:\Program Files\Symfony;C:\xampp2\php\php.exe;C:\xampp2\php;C:\Users\Jander Nery\AppData\Roaming\Composer\vendor\bin;C:\Program Files\PuTTY\;C:\Program Files (x86)\Yarn\bin\;C:\Program Files\nodejs\;C:\Program Files\Docker\Docker\resources\bin;C:\ProgramData\DockerDesktop\version-bin;C:\Users\Jander Nery\AppData\Local\Microsoft\WindowsApps;C:\Users\Jander Nery\AppData\Local\Programs\Microsoft VS Code\bin;C:\Users\Jander Nery\AppData\Roaming\Composer\vendor\bin;C:\tools\dart-sdk\bin;C:\Users\Jander Nery\AppData\Roaming\Pub\Cache\bin;C:\Users\Jander Nery\AppData\Local\Yarn\bin;C:\Users\Jander Nery\AppData\Roaming\npm;C:\cmder
@@ -14,17 +14,12 @@ Platform:
   win32 x64
 
 Trace: 
-  Error: https://registry.yarnpkg.com/ensureAuthenticated: Not found
-      at Request.params.callback [as _callback] (C:\Program Files (x86)\Yarn\lib\cli.js:66096:18)
-      at Request.self.callback (C:\Program Files (x86)\Yarn\lib\cli.js:140748:22)
-      at Request.emit (events.js:315:20)
-      at Request.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141720:10)
-      at Request.emit (events.js:315:20)
-      at IncomingMessage.<anonymous> (C:\Program Files (x86)\Yarn\lib\cli.js:141642:12)
-      at Object.onceWrapper (events.js:421:28)
-      at IncomingMessage.emit (events.js:327:22)
-      at endReadableNT (_stream_readable.js:1220:12)
-      at processTicksAndRejections (internal/process/task_queues.js:84:21)
+  SyntaxError: C:\Projetos React Native\BootCamp\gobarber\gobarber-backend\package.json: Unexpected token } in JSON at position 1372
+      at JSON.parse (<anonymous>)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:1625:59
+      at Generator.next (<anonymous>)
+      at step (C:\Program Files (x86)\Yarn\lib\cli.js:310:30)
+      at C:\Program Files (x86)\Yarn\lib\cli.js:321:13
 
 npm manifest: 
   {
@@ -34,13 +29,16 @@ npm manifest:
     "license": "MIT",
     "scripts": {
       "build": "tsc",
-      "dev:server": "ts-node-dev --transpile-only --ignore-watch node_modules src/server.ts",
-      "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js"
+      "dev:server": "ts-node-dev -r tsconfig-paths/register --transpile-only --ignore-watch node_modules src/shared/infra/http/server.ts",
+      "typeorm": "ts-node-dev -r tsconfig-paths/register ./node_modules/typeorm/cli.js",
+      "start": "ts-node src/shared/infra/http/server.ts"
     },
     "dependencies": {
       "bcryptjs": "^2.4.3",
+      "cors": "^2.8.5",
       "date-fns": "^2.15.0",
       "express": "^4.17.1",
+      "express-async-errors": "^3.1.1",
       "jsonwebtoken": "^8.5.1",
       "multer": "^1.4.2",
       "pg": "^8.3.2",
@@ -50,10 +48,22 @@ npm manifest:
     },
     "devDependencies": {
       "@types/bcryptjs": "^2.4.2",
+      "@types/cors": "^2.8.7",
       "@types/express": "^4.17.7",
       "@types/jsonwebtoken": "^8.5.0",
+      "@types/multer": "^1.4.4",
       "ts-node-dev": "^1.0.0-pre.60",
-      "typescript": "^4.0.2"
+      "tsconfig-paths": "^3.9.0",
+      "typescript": "^4.0.2",
+      "@typescript-eslint/eslint-plugin": "^2.27.0",
+      "@typescript-eslint/parser": "^2.27.0",
+      "eslint": "^6.8.0",
+      "eslint-config-airbnb-base": "^14.1.0",
+      "eslint-config-prettier": "^6.10.1",
+      "eslint-import-resolver-typescript": "^2.0.0",
+      "eslint-plugin-import": "^2.20.1",
+      "eslint-plugin-prettier": "^3.1.2",
+      "prettier": "^2.0.4",
     }
   }
 
@@ -90,6 +100,13 @@ Lockfile:
     dependencies:
       "@types/node" "*"
   
+  "@types/cors@^2.8.7":
+    version "2.8.7"
+    resolved "https://registry.yarnpkg.com/@types/cors/-/cors-2.8.7.tgz#ab2f47f1cba93bce27dfd3639b006cc0e5600889"
+    integrity sha512-sOdDRU3oRS7LBNTIqwDkPJyq0lpHYcbMTt0TrjzsXbk/e37hcLTH6eZX7CdbDeN0yJJvzw9hFBZkbtCSbk/jAQ==
+    dependencies:
+      "@types/express" "*"
+  
   "@types/express-serve-static-core@*":
     version "4.17.9"
     resolved "https://registry.yarnpkg.com/@types/express-serve-static-core/-/express-serve-static-core-4.17.9.tgz#2d7b34dcfd25ec663c25c85d76608f8b249667f1"
@@ -99,7 +116,7 @@ Lockfile:
       "@types/qs" "*"
       "@types/range-parser" "*"
   
-  "@types/express@^4.17.7":
+  "@types/express@*", "@types/express@^4.17.7":
     version "4.17.7"
     resolved "https://registry.yarnpkg.com/@types/express/-/express-4.17.7.tgz#42045be6475636d9801369cd4418ef65cdb0dd59"
     integrity sha512-dCOT5lcmV/uC2J9k0rPafATeeyz+99xTt54ReX11/LObZgfzJqZNcW27zGhYyX+9iSEGXGt5qLPwRSvBZcLvtQ==
@@ -108,6 +125,11 @@ Lockfile:
       "@types/express-serve-static-core" "*"
       "@types/qs" "*"
       "@types/serve-static" "*"
+  
+  "@types/json5@^0.0.29":
+    version "0.0.29"
+    resolved "https://registry.yarnpkg.com/@types/json5/-/json5-0.0.29.tgz#ee28707ae94e11d2b827bcbe5270bcea7f3e71ee"
+    integrity sha1-7ihweulOEdK4J7y+UnC86n8+ce4=
   
   "@types/jsonwebtoken@^8.5.0":
     version "8.5.0"
@@ -120,6 +142,13 @@ Lockfile:
     version "2.0.3"
     resolved "https://registry.yarnpkg.com/@types/mime/-/mime-2.0.3.tgz#c893b73721db73699943bfc3653b1deb7faa4a3a"
     integrity sha512-Jus9s4CDbqwocc5pOAnh8ShfrnMcPHuJYzVcSUU7lrh8Ni5HuIqX3oilL86p3dlTrk0LzHRCgA/GQ7uNCw6l2Q==
+  
+  "@types/multer@^1.4.4":
+    version "1.4.4"
+    resolved "https://registry.yarnpkg.com/@types/multer/-/multer-1.4.4.tgz#bb5d9abc410da82726ceca74008bb81813349a88"
+    integrity sha512-wdfkiKBBEMTODNbuF3J+qDDSqJxt50yB9pgDiTcFew7f97Gcc7/sM4HR66ofGgpJPOALWOqKAch4gPyqEXSkeQ==
+    dependencies:
+      "@types/express" "*"
   
   "@types/node@*":
     version "14.6.0"
@@ -491,6 +520,14 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/core-util-is/-/core-util-is-1.0.2.tgz#b5fd54220aa2bc5ab57aab7140c940754503c1a7"
     integrity sha1-tf1UIgqivFq1eqtxQMlAdUUDwac=
   
+  cors@^2.8.5:
+    version "2.8.5"
+    resolved "https://registry.yarnpkg.com/cors/-/cors-2.8.5.tgz#eac11da51592dd86b9f06f6e7ac293b3df875d29"
+    integrity sha512-KIHbLJqu73RGr/hnbrO9uBeixNGuvSQjul/jdFvS/KFSIH1hWVd1ng7zOHx+YrEfInLG7q4n6GHQ9cDtxv/P6g==
+    dependencies:
+      object-assign "^4"
+      vary "^1"
+  
   currently-unhandled@^0.4.1:
     version "0.4.1"
     resolved "https://registry.yarnpkg.com/currently-unhandled/-/currently-unhandled-0.4.1.tgz#988df33feab191ef799a61369dd76c17adf957ea"
@@ -618,6 +655,11 @@ Lockfile:
     version "1.8.1"
     resolved "https://registry.yarnpkg.com/etag/-/etag-1.8.1.tgz#41ae2eeb65efa62268aebfea83ac7d79299b0887"
     integrity sha1-Qa4u62XvpiJorr/qg6x9eSmbCIc=
+  
+  express-async-errors@^3.1.1:
+    version "3.1.1"
+    resolved "https://registry.yarnpkg.com/express-async-errors/-/express-async-errors-3.1.1.tgz#6053236d61d21ddef4892d6bd1d736889fc9da41"
+    integrity sha512-h6aK1da4tpqWSbyCa3FxB/V6Ehd4EEB15zyQq9qe75OZBp0krinNKuH4rAY+S/U/2I36vdLAUFSjQJ+TFmODng==
   
   express@^4.17.1:
     version "4.17.1"
@@ -915,6 +957,13 @@ Lockfile:
       argparse "^1.0.7"
       esprima "^4.0.0"
   
+  json5@^1.0.1:
+    version "1.0.1"
+    resolved "https://registry.yarnpkg.com/json5/-/json5-1.0.1.tgz#779fb0018604fa854eacbf6252180d83543e3dbe"
+    integrity sha512-aKS4WQjPenRxiQsC93MNfjx+nbF4PAdYzmd/1JIj8HYzqfbu86beTuNgXDzPknWk0n0uARlyewZo4s++ES36Ow==
+    dependencies:
+      minimist "^1.2.0"
+  
   jsonwebtoken@^8.5.1:
     version "8.5.1"
     resolved "https://registry.yarnpkg.com/jsonwebtoken/-/jsonwebtoken-8.5.1.tgz#00e71e0b8df54c2121a1f26137df2280673bcc0d"
@@ -1082,7 +1131,7 @@ Lockfile:
     dependencies:
       brace-expansion "^1.1.7"
   
-  minimist@^1.1.3, minimist@^1.2.5:
+  minimist@^1.1.3, minimist@^1.2.0, minimist@^1.2.5:
     version "1.2.5"
     resolved "https://registry.yarnpkg.com/minimist/-/minimist-1.2.5.tgz#67d66014b66a6a8aaa0c083c5fd58df4e4e97602"
     integrity sha512-FM9nNUYrRBAELZQT3xeZQ7fmMOBg6nWNmJKTcgsJeaLstP/UODVpGsr5OhXhhXg6f+qtJ8uiZ+PUxkDWcgIXLw==
@@ -1157,7 +1206,7 @@ Lockfile:
     resolved "https://registry.yarnpkg.com/normalize-path/-/normalize-path-3.0.0.tgz#0dcd69ff23a1c9b11fd0978316644a0388216a65"
     integrity sha512-6eZs5Ls3WtCisHWp9S2GUy8dqkpGi4BVSz3GaqiE6ezub0512ESztXUwUB6C6IKbQkY2Pnb/mD4WYojCRwcwLA==
   
-  object-assign@^4.0.1, object-assign@^4.1.1:
+  object-assign@^4, object-assign@^4.0.1, object-assign@^4.1.1:
     version "4.1.1"
     resolved "https://registry.yarnpkg.com/object-assign/-/object-assign-4.1.1.tgz#2109adc7965887cfc05cbbd442cac8bfbb360863"
     integrity sha1-IQmtx5ZYh8/AXLvUQsrIv7s2CGM=
@@ -1803,6 +1852,16 @@ Lockfile:
       source-map-support "^0.5.17"
       yn "3.1.1"
   
+  tsconfig-paths@^3.9.0:
+    version "3.9.0"
+    resolved "https://registry.yarnpkg.com/tsconfig-paths/-/tsconfig-paths-3.9.0.tgz#098547a6c4448807e8fcb8eae081064ee9a3c90b"
+    integrity sha512-dRcuzokWhajtZWkQsDVKbWyY+jgcLC5sqJhg2PSgf4ZkH2aHPvaOY8YWGhmjb68b5qqTfasSsDO9k7RUiEmZAw==
+    dependencies:
+      "@types/json5" "^0.0.29"
+      json5 "^1.0.1"
+      minimist "^1.2.0"
+      strip-bom "^3.0.0"
+  
   tsconfig@^7.0.0:
     version "7.0.0"
     resolved "https://registry.yarnpkg.com/tsconfig/-/tsconfig-7.0.0.tgz#84538875a4dc216e5c4a5432b3a4dec3d54e91b7"
@@ -1893,7 +1952,7 @@ Lockfile:
       spdx-correct "^3.0.0"
       spdx-expression-parse "^3.0.0"
   
-  vary@~1.1.2:
+  vary@^1, vary@~1.1.2:
     version "1.1.2"
     resolved "https://registry.yarnpkg.com/vary/-/vary-1.1.2.tgz#2299f02c6ded30d4a5961b0b9f74524a18f634fc"
     integrity sha1-IpnwLG3tMNSllhsLn3RSShj2NPw=
