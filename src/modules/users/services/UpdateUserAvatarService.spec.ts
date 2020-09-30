@@ -3,15 +3,21 @@ import FakeStorageAvatar from '@shared/container/providers/StorageProvider/fakes
 import UpdateUserAvatarService from '@modules/users/services/UpdateUserAvatarService';
 import AppError from '@shared/errors/AppError';
 
+let fakeUsersRepository: FakeUsersRepository;
+let fakeStorageAvatar: FakeStorageAvatar;
+let updateUserAvatar: UpdateUserAvatarService;
+
 describe('UpdateUserAvatar', () => {
-  it('should be able to create a new avatar', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeStorageAvatar = new FakeStorageAvatar();
-    const updateUserAvatar = new UpdateUserAvatarService(
+  beforeEach(() => {
+    fakeUsersRepository = new FakeUsersRepository();
+    fakeStorageAvatar = new FakeStorageAvatar();
+    updateUserAvatar = new UpdateUserAvatarService(
       fakeUsersRepository,
       fakeStorageAvatar,
     );
+  });
 
+  it('should be able to create a new avatar', async () => {
     const user = await fakeUsersRepository.create({
       name: 'John Doe',
       email: 'johndoe@semnome.com',
@@ -27,13 +33,6 @@ describe('UpdateUserAvatar', () => {
   });
 
   it('should not be able to create a new avatar only for autenticated', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeStorageAvatar = new FakeStorageAvatar();
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUsersRepository,
-      fakeStorageAvatar,
-    );
-
     expect(
       updateUserAvatar.execute({
         user_id: 'non-existing-user',
@@ -43,13 +42,6 @@ describe('UpdateUserAvatar', () => {
   });
 
   it('should delete and update avatar from user existing', async () => {
-    const fakeUsersRepository = new FakeUsersRepository();
-    const fakeStorageAvatar = new FakeStorageAvatar();
-    const updateUserAvatar = new UpdateUserAvatarService(
-      fakeUsersRepository,
-      fakeStorageAvatar,
-    );
-
     const deleteFile = jest.spyOn(fakeStorageAvatar, 'deleteFile');
 
     const user = await fakeUsersRepository.create({
