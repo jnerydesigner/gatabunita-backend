@@ -5,10 +5,10 @@ import {
   CreateDateColumn,
   UpdateDateColumn,
   ManyToOne,
-  JoinColumn
+  JoinColumn,
 } from 'typeorm';
 
-import User from "@modules/users/infra/typeorm/entities/User";
+import User from '@modules/users/infra/typeorm/entities/User';
 
 @Entity('appointments')
 class Appointment {
@@ -19,8 +19,15 @@ class Appointment {
   provider_id: string;
 
   @ManyToOne(() => User)
-  @JoinColumn({ name: 'provider_id'})
+  @JoinColumn({ name: 'provider_id' })
   provider: User;
+
+  @Column()
+  user_id: string;
+
+  @ManyToOne(() => User)
+  @JoinColumn({ name: 'user_id' })
+  user: User;
 
   @Column('time with time zone')
   date: Date;
@@ -30,6 +37,5 @@ class Appointment {
 
   @UpdateDateColumn()
   updated_at: Date;
-  
 }
 export default Appointment;
