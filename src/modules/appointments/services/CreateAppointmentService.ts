@@ -1,24 +1,17 @@
-import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import { startOfHour, isBefore, getHours, format } from 'date-fns';
 import { injectable, inject } from 'tsyringe';
-import {
-  startOfHour,
-  isBefore,
-  getHours,
-  format,
-  ptBR,
-  parseISO,
-} from 'date-fns';
-import AppError from '@shared/errors/AppError';
-import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
-import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
-import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
 
-// import usersRouter from '@modules/users/infra/http/routes/users.routes';
+import AppError from '@shared/errors/AppError';
+
+import ICacheProvider from '@shared/container/providers/CacheProvider/models/ICacheProvider';
+import INotificationsRepository from '@modules/notifications/repositories/INotificationsRepository';
+import Appointment from '@modules/appointments/infra/typeorm/entities/Appointment';
+import IAppointmentsRepository from '@modules/appointments/repositories/IAppointmentsRepository';
 
 interface IRequest {
-  date: Date;
   provider_id: string;
   user_id: string;
+  date: Date;
 }
 
 @injectable()
@@ -39,8 +32,6 @@ class CreateAppointmentService {
   }: IRequest): Promise<Appointment> {
     const appointmentDate = startOfHour(date);
 
-    console.log(appointmentDate);
-
     if (isBefore(appointmentDate, Date.now())) {
       throw new AppError("You can't an appointment on a past date.", 401);
     }
@@ -58,6 +49,7 @@ class CreateAppointmentService {
 
     const findAppointmentInSameDate = await this.appointmentsRepository.findByDate(
       appointmentDate,
+      provider_id,
     );
 
     if (findAppointmentInSameDate) {
@@ -70,27 +62,19 @@ class CreateAppointmentService {
       date: appointmentDate,
     });
 
-    const { user } = appointment;
-
-    const appointmentDateFormated = format(
-      appointmentDate,
-      "dd 'de' MMMM 'às' HH:mm'h'",
-      {
-        locale: ptBR,
-      },
-    );
+    const dateFormatted = format(appointmentDate, "dd/MM/yyyy 'às' HH:mm'h'");
 
     await this.notificationRepository.create({
       recipient_id: provider_id,
-      content: `Novo agendamento com ${user.name} para o dia ${appointmentDateFormated}`,
+      content: `Novo agendamento para dia ${dateFormatted}`,
     });
 
-    const cacheKey = `provider-appointments:${provider_id}:${format(
-      appointmentDate,
-      'YYYY-M-d',
-    )}`;
-
-    await this.cacheProvider.invalidate(cacheKey);
+    await this.cacheProvider.invalidate(
+      `provider-appointments:${provider_id}:${format(
+        appointmentDate,
+        'yyyy-M-d',
+      )}`,
+    );
 
     return appointment;
   }

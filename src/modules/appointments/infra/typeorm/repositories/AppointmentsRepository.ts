@@ -20,7 +20,6 @@ class AppointmentsRepository implements IAppointmentsRepsoitory {
         date,
       },
     });
-    console.log(findAppointment);
 
     return findAppointment;
   }
@@ -78,7 +77,6 @@ class AppointmentsRepository implements IAppointmentsRepsoitory {
         ),
       },
     });
-    // console.log(appointments);
 
     return appointments;
   }

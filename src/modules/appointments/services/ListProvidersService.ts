@@ -17,7 +17,7 @@ class ListProvidersService {
   ) {}
 
   public async execute({ user_id }: IRequest): Promise<User[]> {
-    let users = await this.cacheProvider.revovery<User[]>(
+    let users = await this.cacheProvider.recovery<User[]>(
       `Providers-List:${user_id}`,
     );
 

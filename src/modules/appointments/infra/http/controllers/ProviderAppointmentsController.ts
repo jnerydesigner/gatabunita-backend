@@ -20,17 +20,4 @@ export default class ProviderAppointmentsController {
 
     return response.json(appointments);
   }
-
-  public async show(request: Request, response: Response): Promise<Response> {
-    const { provider_id } = request.body;
-
-    const listAllAppointmentProvider = container.resolve(
-      ListAllAppointmentProvider,
-    );
-
-    const appointments = await listAllAppointmentProvider.execute({
-      provider_id,
-    });
-    return response.json(appointments);
-  }
 }
