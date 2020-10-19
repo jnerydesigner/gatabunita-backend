@@ -1,12 +1,12 @@
 import path from 'path';
-import multer, { StorageEngine } from 'multer';
 import crypto from 'crypto';
-import User from '@modules/users/infra/typeorm/entities/User';
+import multer, { StorageEngine } from 'multer';
 
 const tmpFolder = path.resolve(__dirname, '..', '..', 'tmp');
 
 interface IUploadConfig {
   driver: 's3' | 'disk';
+
   tmpFolder: string;
   uploadsFolder: string;
 
