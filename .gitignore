@@ -4,5 +4,4 @@ tmp/*
 !tmp/.gitkeep
 coverage
 .env
-.env.example
 ormconfig.json
